@@ -13,6 +13,8 @@ def get_containers_dbdocker():
     service_list=[]
     for temp in db_data:
         service_list.append(temp["name"])
+    
+   
 
 
     client = docker.APIClient(base_url='unix://var/run/docker.sock') 
@@ -48,6 +50,7 @@ def get_containers_dbdocker():
         # finding the name of the service from the container data and matching with service db data
         try:
             results= re.search('vsmaps_(.+?)(\-\d)*?$',container_data['name']).group(1)
+            
               
         except AttributeError:
             results=''
@@ -60,7 +63,11 @@ def get_containers_dbdocker():
                 if results==db_temp['name']:
                     container_data['service']=db_temp['name']
                     container_data['type']=db_temp['deployment_type']
-        
+            
+            if 'service' not in container_data:
+                container_data['service']=''
+                container_data['type']=''
+
 
         result.append(container_data)
     

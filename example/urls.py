@@ -11,5 +11,7 @@ urlpatterns = [
 	path('api/status/',views.index_status),
 	path('api/version_info/',views.index_version_info),
 	path('api/logs/',views.index_logs_containers),
+	path('api/servicetypes/',views.index_service_types),
+	path('api/migrateservices/',views.index_migrate_services),
 
 ]

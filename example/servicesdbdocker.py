@@ -58,19 +58,27 @@ def get_service_data():
                     host_list=[]
 
                 else:
-                    for j in tasks:
-                        # filtering only running tasks
-                        if j.desired_state=="running":
+                    # for j in tasks:
+                    #     # filtering only running tasks
+                    #     if j.desired_state=="running":
                             
-                            # finding nodeid of running tasks 
-                            if j.node_id!=None:
-                                node_id=j.node_id
-
-                                # getting name of host from node id
-                                node=docker.node.inspect(node_id)
-                                if node !=None:
-                                    host_list.append(node.description.hostname)
-        
+                    #         # finding nodeid of running tasks 
+                    #         if j.node_id!=None:
+                    #             node_id=j.node_id
+                    #             try:
+                    #             # getting name of host from node id
+                    #                 node=docker.node.inspect(node_id)
+                    #             except:
+                    #                 node=None
+                    #             if node !=None:
+                    #                 host_list.append(node.description.hostname)
+                    if tasks[0].status.state=='running':
+                        try:
+                            node=docker.node.inspect(tasks[0].node_id)
+                            host_list.append(node.description.hostname)
+                        except:
+                            pass
+            
         data['hosts']=host_list
         result.append(data)
     

@@ -1,7 +1,7 @@
 import sqlalchemy as db  
-import json
+
     
-def get_service_db():
+def get_service_type(servicename):
     config = {
         # 'host': '172.21.0.2',
         'host':'mysql_container_cc',
@@ -24,21 +24,21 @@ def get_service_db():
     
     # get details from services table
 
-    sql = db.text(f'select * from services')
+    sql = db.text(f'select deployment_type from services where name="{servicename}"')
     result = engine.execute(sql).fetchall()   
 
 
-    service_db=[]
+
     
     for row in result:
 
     # converting sql output to dict
         x=row._asdict()
-        service_db.append(x)
+        type=x['deployment_type']
     
     # print(service_db)
-    return service_db
+    return type
 
-get_service_db()
+
 
     

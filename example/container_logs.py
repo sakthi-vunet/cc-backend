@@ -12,7 +12,7 @@ def get_container_logs(service_name):
     tasks=service_object.tasks(filters={'desired-state':'running'})
     if tasks==[]:
         return "No such service is running"
-        
+
     else:
         for temp in tasks:
             if 'NodeID' in temp:
@@ -28,14 +28,14 @@ def get_container_logs(service_name):
                         logdata=x.logs(tail=10)
                         logs=logdata.decode('utf-8')
                         return logs
-                
+
                 else:
                     ssh = paramiko.SSHClient()
                     # Adding new host key to the local
                     # HostKeys object(in case of missing)
                     # AutoAddPolicy for missing host key to be set before connection setup.
                     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                    ssh.connect(hostname, port=22,  username='sakthi', password='Lucky@2002', timeout=3)
+                    ssh.connect(hostname,  username='sakthi', password='Lucky@2002', timeout=3,port=33)
                     # Execute command on SSH terminal
                     # using exec_command
                     # get container id
@@ -43,10 +43,12 @@ def get_container_logs(service_name):
                     stdin, stdout, stderr = ssh.exec_command(cmd)
                     containerid=stdout.readlines()
                     # get logs using containerid
-                    cmd='docker logs --since=10m --until=1m '+containerid[0][:-1]
+                    cmd='docker logs '+containerid[0][:-1]
                     stdin, stdout, stderr = ssh.exec_command(cmd)
                     logs=stdout.readlines()
                     return logs
             else:
                 return "Not Running"
-                    
+
+
+                                                                                       
