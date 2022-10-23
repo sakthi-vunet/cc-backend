@@ -35,7 +35,7 @@ def get_container_logs(service_name):
                     # HostKeys object(in case of missing)
                     # AutoAddPolicy for missing host key to be set before connection setup.
                     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                    ssh.connect(hostname,  username='sakthi', password='Lucky@2002', timeout=3,port=33)
+                    ssh.connect(hostname,  username='sakthi', password='Lucky@2002', timeout=3)
                     # Execute command on SSH terminal
                     # using exec_command
                     # get container id
